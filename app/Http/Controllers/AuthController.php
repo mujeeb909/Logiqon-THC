@@ -35,8 +35,6 @@ class AuthController extends Controller
 
     public function loginForm()
     {
-
-
         return view('authentication.authentication-signin');
     }
 

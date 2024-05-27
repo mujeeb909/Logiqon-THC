@@ -1,3 +1,15 @@
+@php
+    function getRandomColor()
+    {
+        $letters = '0123456789ABCDEF';
+        $color = '#';
+        for ($i = 0; $i < 6; $i = $i + 1) {
+            $color .= $letters[rand(0, 15)];
+        }
+        return $color;
+    }
+@endphp
+
 <!DOCTYPE html>
 <html>
 
@@ -29,16 +41,16 @@
             <section class="frame-parent">
                 <div class="frame-group">
                     <div class="john-wrapper">
-                        <h3 class="john">John</h3>
+                        <h3 class="john">{{ $user->name }}</h3>
                     </div>
                     <div class="frame-wrapper">
                         <div class="artist-parent">
-                            <div class="artist">Artist</div>
+                            <div class="artist">{{ $user->designation }}</div>
                             <div class="frame-container">
                                 <div class="jonasyahoocom-parent">
-                                    <div class="jonasyahoocom">jonas@yahoo.com</div>
-                                    <div class="age">18-30 Age</div>
-                                    <div class="california">California</div>
+                                    <div class="jonasyahoocom">{{ $user->email }}</div>
+                                    <div class="age">{{ $user->age }} Age</div>
+                                    <div class="california">{{ $user->address }}</div>
                                 </div>
                                 <button class="rectangle-container">
                                     <div class="frame-inner"></div>
@@ -55,55 +67,22 @@
                         <div class="rectangle-parent1">
                             <div class="rectangle-div"></div>
                             <div class="as-a-musician">
-                                As a musician, I feel like I'm on a perpetual journey of
-                                self-discovery and expression. From the moment I first picked
-                                up my instrument, I knew that music would be an integral part
-                                of my life. It's not just a hobby or a career choice for me;
-                                it's a calling, a passion that fuels my every breath.Music has
-                                a way of speaking to me in ways that words cannot. It's a
-                                language of emotion, a conduit for my innermost thoughts and
-                                feelings.
+                                {{ $user->description }}
                             </div>
                         </div>
                     </div>
                     <div class="design-wrapper">
                         <div class="design">
-                            <button class="frame-button">
-                                <div class="frame-child1"></div>
-                                <div class="pop">Pop</div>
-                            </button>
-                            <button class="rectangle-parent2">
-                                <div class="frame-child2"></div>
-                                <div class="rock">Rock</div>
-                            </button>
-                            <button class="rectangle-parent3">
-                                <div class="frame-child3"></div>
-                                <div class="hip-hop">Hip Hop</div>
-                            </button>
-                            <button class="rectangle-parent4">
-                                <div class="frame-child4"></div>
-                                <div class="piano">Piano</div>
-                            </button>
-                            <button class="rectangle-parent5">
-                                <div class="frame-child5"></div>
-                                <div class="jazz">Jazz</div>
-                            </button>
-                            <div class="rectangle-parent6">
-                                <div class="frame-child6"></div>
-                                <div class="music">Music</div>
-                            </div>
-                            <div class="rectangle-parent7">
-                                <div class="frame-child7"></div>
-                                <div class="pop-up">Pop Up</div>
-                            </div>
-                            <div class="rectangle-parent8">
-                                <div class="frame-child8"></div>
-                                <div class="piano1">Piano</div>
-                            </div>
-                            <div class="rectangle-parent9">
-                                <div class="frame-child9"></div>
-                                <div class="notes">Notes</div>
-                            </div>
+                            @foreach ($tags as $tag)
+                                @php
+                                    $randomColor = getRandomColor();
+                                @endphp
+                                <button class="frame-button" style="background-color: {{ $randomColor }};">
+                                    <div class="frame-child1"></div>
+                                    <div class="pop">{{ $tag->name }}</div>
+                                </button>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>

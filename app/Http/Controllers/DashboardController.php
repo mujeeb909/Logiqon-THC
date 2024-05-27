@@ -45,13 +45,6 @@ class DashboardController extends Controller
     }
 
 
-    public function showProfilePage()
-    {
-        // $user = User::where('username', $username)->first();
-        return view('public-profile');
-    }
-
-
 
 
 

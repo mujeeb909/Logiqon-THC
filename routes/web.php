@@ -1,14 +1,15 @@
 <?php
 
+use App\Services\Settings;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\StripeController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\StripeController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HubspotApiController;
-use Illuminate\Support\Facades\Route;
-use App\Services\Settings;
 
 
 
@@ -56,7 +57,6 @@ Route::middleware([AlreadyLoggedIn::class])->group(function () {
 
 
     Route::post('register', [AuthController::class, 'store']);
-
     Route::get('login', [AuthController::class, 'loginForm'])->name('login');
     Route::get('verify-account', [AuthController::class, 'verifyAccount'])->name('verify-account');
     Route::get('resend-verify-account', [AuthController::class, 'verifyOTPAccount'])->name('resend-verify-account');
@@ -72,7 +72,7 @@ Route::middleware([AlreadyLoggedIn::class])->group(function () {
 
 });
 
-Route::get('profile', [DashboardController::class, 'showProfilePage'])->name('showProfilePage');
+Route::get('{username}', [ProfileController::class, 'index'])->name('public-profile');
 
 
 //---------------------------------------------Admin Routes -------------------------------------
@@ -91,13 +91,11 @@ Route::middleware([Admin::class])->group(function () {
     Route::post('saveProducts', [ProductController::class, 'store'])->name('saveProducts');
     Route::post('/deleteSelectedRows', [ProductController::class, 'deleteSelectedRows'])->name('deleteSelectedRows');
 
-    // Show products route
     Route::get('plans', [ProductController::class, 'index'])->name('plans');
 
     Route::post('payment', [StripeController::class, 'makePayment'])->name('payment');
     Route::get('success', [StripeController::class, 'success'])->name('success');
     Route::get('cancel', [StripeController::class, 'cancel'])->name('cancel');
-    // Search products route
     Route::get('products-search', [ProductController::class, 'search'])->name('searchProducts');
 
     Route::get('setting-change-password', [ProductController::class, 'changePassword'])->name('setting-change-password');
@@ -112,6 +110,8 @@ Route::middleware([Admin::class])->group(function () {
 
 });
 
+
+// Route::get('addme-profile', [ProfileController::class, 'index'])->name('addmeprofile');
 
 
 
